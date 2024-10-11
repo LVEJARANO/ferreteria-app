@@ -28,7 +28,7 @@ namespace Data
         }
 
         //Metodo para guardar un nuevo Usuario
-        public bool saveUsers(string _mail, string _password, string _salt, string _state)
+        public bool saveUsers(string _mail, string _password, string _salt, string _state, DateTime _date, int _fkrol, int _fkemployee)
         {
             bool executed = false;
             int row;
@@ -41,6 +41,10 @@ namespace Data
             objSelectCmd.Parameters.Add("p_password", MySqlDbType.VarString).Value = _password;
             objSelectCmd.Parameters.Add("p_salt", MySqlDbType.VarString).Value = _salt;
             objSelectCmd.Parameters.Add("p_state", MySqlDbType.VarString).Value = _state;
+            objSelectCmd.Parameters.Add("p_date", MySqlDbType.Date).Value = _date;
+            objSelectCmd.Parameters.Add("p_rol", MySqlDbType.Int32).Value = _fkrol;
+            objSelectCmd.Parameters.Add("p_employee", MySqlDbType.Int32).Value = _fkemployee;
+
 
             try
             {
@@ -59,7 +63,7 @@ namespace Data
         }
 
         //Metodo para actualizar un Usuario
-        public bool updateUsers(int _id, string _mail, string _password, string _salt, string _state)
+        public bool updateUsers(int _id, string _mail, string _password, string _salt, string _state, DateTime _date, int _fkrol, int _fkemployee)
         {
             bool executed = false;
             int row;
@@ -73,6 +77,9 @@ namespace Data
             objSelectCmd.Parameters.Add("p_password", MySqlDbType.VarString).Value = _password;
             objSelectCmd.Parameters.Add("p_salt", MySqlDbType.VarString).Value = _salt;
             objSelectCmd.Parameters.Add("p_state", MySqlDbType.VarString).Value = _state;
+            objSelectCmd.Parameters.Add("p_date", MySqlDbType.Date).Value = _date;
+            objSelectCmd.Parameters.Add("p_rol", MySqlDbType.Int32).Value = _fkrol;
+            objSelectCmd.Parameters.Add("p_employee", MySqlDbType.Int32).Value = _fkemployee;
 
             try
             {

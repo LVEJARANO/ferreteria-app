@@ -73,7 +73,7 @@ namespace Data
         }
 
         //Metodo para actualizar una Categoria
-        public bool updateCategory(int _idCategory, string _description)
+        public bool updateCategory(int _idCategory, string _description, DateTime _fecha)
         {
             bool executed = false;
             int row;
@@ -84,6 +84,7 @@ namespace Data
             objSelectCmd.CommandType = CommandType.StoredProcedure;
             objSelectCmd.Parameters.Add("p_id", MySqlDbType.Int32).Value = _idCategory;
             objSelectCmd.Parameters.Add("p_description", MySqlDbType.VarString).Value = _description;
+            objSelectCmd.Parameters.Add("p_fecha", MySqlDbType.DateTime).Value = _fecha;
 
             try
             {
@@ -128,7 +129,6 @@ namespace Data
             }
             objPer.closeConnection();
             return executed;
-
         }
     }
 }
