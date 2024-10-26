@@ -29,8 +29,8 @@
     <br />
     <%--Botones Guardar y Actualizar--%>
     <div>
-        <asp:Button ID="BtnSave" runat="server" Text="Guardar" />
-        <asp:Button ID="BtnUpdate" runat="server" Text="Actualizar" />
+        <asp:Button ID="BtnSave" runat="server" Text="Guardar" OnClick="BtnSave_Click" />
+        <asp:Button ID="BtnUpdate" runat="server" Text="Actualizar" OnClick="BtnUpdate_Click" />
         <asp:Label ID="LblMsg" runat="server" Text=""></asp:Label>
     </div>
     <br />
