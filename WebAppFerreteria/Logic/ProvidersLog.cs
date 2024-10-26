@@ -19,6 +19,12 @@ namespace Logic
             return objProv.showProviders();
         }
 
+        //Metodo para mostrar unicamente el id y la descripcion de los Provedores, en el DropDownList
+        public DataSet showProvidersDDL()
+        {
+            return objProv.showProvidersDDL();
+        }
+
         //Metodo para guardar un nuevo Proveedor
         public bool saveProvider(string _nit, string _name)
         {
