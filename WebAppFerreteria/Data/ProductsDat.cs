@@ -104,7 +104,7 @@ namespace Data
             objSelectCmd.Parameters.Add("p_id", MySqlDbType.Int32).Value = _id;
             objSelectCmd.Parameters.Add("p_code", MySqlDbType.VarString).Value = _code;
             objSelectCmd.Parameters.Add("p_description", MySqlDbType.VarString).Value = _description;
-            objSelectCmd.Parameters.Add("p_quantity", MySqlDbType.Int32).Value = _quantity;
+            objSelectCmd.Parameters.Add("p_amount", MySqlDbType.Int32).Value = _quantity;
             objSelectCmd.Parameters.Add("p_price", MySqlDbType.Double).Value = _price;
             objSelectCmd.Parameters.Add("p_fkcategory", MySqlDbType.Int32).Value = _fkCategory;
             objSelectCmd.Parameters.Add("p_fkprovider", MySqlDbType.Int32).Value = _fkProvider;

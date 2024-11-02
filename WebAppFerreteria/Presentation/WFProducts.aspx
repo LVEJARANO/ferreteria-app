@@ -1,41 +1,165 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="WFProducts.aspx.cs" Inherits="Presentation.WFProducts" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <%--Estilos--%>
+    <link href="resources/css/datatables.min.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:TextBox ID="TBId" runat="server"></asp:TextBox>
-    <%--Codigo--%>
-    <asp:Label ID="Label1" runat="server" Text="Ingrese el Codigo"></asp:Label>
-    <asp:TextBox ID="TBCode" runat="server"></asp:TextBox>
-    <br />
-    <%--Descripcion--%>
-    <asp:Label ID="Label2" runat="server" Text="Ingrese la Descripcion"></asp:Label>
-    <asp:TextBox ID="TBDescription" runat="server"></asp:TextBox>
-    <br />
-    <%--Cantidad--%>
-    <asp:Label ID="Label3" runat="server" Text="Ingrese la Cantidad"></asp:Label>
-    <asp:TextBox ID="TBQuantity" runat="server"></asp:TextBox>
-    <br />
-    <%--Precio--%>
-    <asp:Label ID="Label4" runat="server" Text="Ingrese el Precio"></asp:Label>
-    <asp:TextBox ID="TBPrice" runat="server"></asp:TextBox>
-    <br />
-    <%--Proveedor--%>
-    <asp:Label ID="Label5" runat="server" Text="Seleccione el Proveedor"></asp:Label>
-    <asp:DropDownList ID="DDLProviders" runat="server"></asp:DropDownList>
-    <br />
-    <%--Categorias--%>
-    <asp:Label ID="Label6" runat="server" Text="Seleccione la Categoria"></asp:Label>
-    <asp:DropDownList ID="DDLCategory" runat="server"></asp:DropDownList>
-    <br />
-    <%--Botones Guardar y Actualizar--%>
-    <div>
-        <asp:Button ID="BtnSave" runat="server" Text="Guardar" OnClick="BtnSave_Click" />
-        <asp:Button ID="BtnUpdate" runat="server" Text="Actualizar" OnClick="BtnUpdate_Click" />
-        <asp:Label ID="LblMsg" runat="server" Text=""></asp:Label>
-    </div>
-    <br />
+    <form runat="server">
+        <%--Id--%>
+        <asp:HiddenField ID="HFProductID" runat="server" />
+
+        <%--Codigo--%>
+        <asp:Label ID="Label1" runat="server" Text="Ingrese el Codigo"></asp:Label>
+        <asp:TextBox ID="TBCode" runat="server"></asp:TextBox>
+        <br />
+        <%--Descripcion--%>
+        <asp:Label ID="Label2" runat="server" Text="Ingrese la Descripcion"></asp:Label>
+        <asp:TextBox ID="TBDescription" runat="server"></asp:TextBox>
+        <br />
+        <%--Cantidad--%>
+        <asp:Label ID="Label3" runat="server" Text="Ingrese la Cantidad"></asp:Label>
+        <asp:TextBox ID="TBQuantity" runat="server"></asp:TextBox>
+        <br />
+        <%--Precio--%>
+        <asp:Label ID="Label4" runat="server" Text="Ingrese el Precio"></asp:Label>
+        <asp:TextBox ID="TBPrice" runat="server"></asp:TextBox>
+        <br />
+        <%--Proveedor--%>
+        <asp:Label ID="Label5" runat="server" Text="Seleccione el Proveedor"></asp:Label>
+        <asp:DropDownList ID="DDLProviders" runat="server"></asp:DropDownList>
+        <br />
+        <%--Categorias--%>
+        <asp:Label ID="Label6" runat="server" Text="Seleccione la Categoria"></asp:Label>
+        <asp:DropDownList ID="DDLCategory" runat="server"></asp:DropDownList>
+        <br />
+        <%--Botones Guardar y Actualizar--%>
+        <div>
+            <asp:Button ID="BtnSave" runat="server" Text="Guardar" OnClick="BtnSave_Click" />
+            <asp:Button ID="BtnUpdate" runat="server" Text="Actualizar" OnClick="BtnUpdate_Click" />
+            <asp:Label ID="LblMsg" runat="server" Text=""></asp:Label>
+        </div>
+        <br />
+    </form>
+
+
     <%--Lista de Productos--%>
-    <div>
-        <asp:GridView ID="GVProducts" runat="server"></asp:GridView>
-    </div>
+    <h2>Lista de Proveedores</h2>
+    <table id="productsTable" class="display" style="width: 100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>FkCategoria</th>
+                <th>Categoria</th>
+                <th>FkProveedor</th>
+                <th>Proveedor</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="resources/js/datatables.min.js" type="text/javascript"></script>
+
+    <%--Productos--%>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#productsTable').DataTable({
+                "processing": true,
+                "serverSide": false,
+                "ajax": {
+                    "url": "WFProducts.aspx/ListProducts",// Se invoca el WebMethod Listar Productos
+                    "type": "POST",
+                    "contentType": "application/json",
+                    "data": function (d) {
+                        return JSON.stringify(d);// Convierte los datos a JSON
+                    },
+                    "dataSrc": function (json) {
+                        return json.d.data;// Obtiene la lista de productos del resultado
+                    }
+                },
+                "columns": [
+                    { "data": "ProductID" },
+                    { "data": "Code" },
+                    { "data": "Description" },
+                    { "data": "Quantity" },
+                    { "data": "Price" },
+                    { "data": "FkCategory", "visible": false },
+                    { "data": "NameCategory" },
+                    { "data": "FkProvider", "visible": false },
+                    { "data": "NameProvider" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `<button class="edit-btn" data-id="${row.ProductID}">Editar</button>
+                               <button class="delete-btn" data-id="${row.ProductID}">Eliminar</button>`;
+                        }
+                    }
+                ],
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+
+            });
+
+            // Editar un producto
+            $('#productsTable').on('click', '.edit-btn', function () {
+                //const id = $(this).data('id');
+                const rowData = $('#productsTable').DataTable().row($(this).parents('tr')).data();
+                //alert(JSON.stringify(rowData, null, 2));
+                loadProductData(rowData);
+            });
+
+            // Eliminar un producto
+            $('#productsTable').on('click', '.delete-btn', function () {
+                const id = $(this).data('id');// Obtener el ID del producto
+                if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+                    deleteProduct(id);// Invoca a la función para eliminar el producto
+                }
+            });
+        });
+
+        // Cargar los datos en los TextBox y DDL para actualizar
+        function loadProductData(rowData) {
+            $('#<%= HFProductID.ClientID %>').val(rowData.ProductID);
+          $('#<%= TBCode.ClientID %>').val(rowData.Code);
+          $('#<%= TBDescription.ClientID %>').val(rowData.Description);
+          $('#<%= TBQuantity.ClientID %>').val(rowData.Quantity);
+          $('#<%= TBPrice.ClientID %>').val(rowData.Price);
+          $('#<%= DDLProviders.ClientID %>').val(rowData.FkProvider);
+          $('#<%= DDLCategory.ClientID %>').val(rowData.FkCategory);
+        }
+
+        // Función para eliminar un producto
+        function deleteProduct(id) {
+            $.ajax({
+                type: "POST",
+                url: "WFProducts.aspx/DeleteProduct",// Se invoca el WebMethod Eliminar un Producto
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ id: id }),
+                success: function (response) {
+                    $('#productsTable').DataTable().ajax.reload();// Recargar la tabla después de eliminar
+                    alert("Producto eliminado exitosamente.");
+                },
+                error: function () {
+                    alert("Error al eliminar el producto.");
+                }
+            });
+        }
+  </script>
 </asp:Content>
