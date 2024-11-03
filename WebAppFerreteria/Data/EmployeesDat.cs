@@ -7,19 +7,19 @@ using System.Web;
 
 namespace Data
 {
-    public class RolDat
+    public class EmployeesDat
     {
         Persistence objPer = new Persistence();
 
-        //Metodo para mostrar unicamente el id y el nombre de los Roles, en el DropDownList
-        public DataSet showRolesDDL()
+        //Metodo para mostrar unicamente el id y el nombre de los Empleados, en el DropDownList
+        public DataSet showEmployeesDDL()
         {
             MySqlDataAdapter objAdapter = new MySqlDataAdapter();
             DataSet objData = new DataSet();
 
             MySqlCommand objSelectCmd = new MySqlCommand();
             objSelectCmd.Connection = objPer.openConnection();
-            objSelectCmd.CommandText = "spSelectRolesDDL";
+            objSelectCmd.CommandText = "spSelectEmployeesDDL";
             objSelectCmd.CommandType = CommandType.StoredProcedure;
             objAdapter.SelectCommand = objSelectCmd;
             objAdapter.Fill(objData);

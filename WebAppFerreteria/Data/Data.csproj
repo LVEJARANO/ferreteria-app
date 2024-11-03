@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryDat.cs" />
+    <Compile Include="EmployeesDat.cs" />
     <Compile Include="PermisoDat.cs" />
     <Compile Include="Persistence.cs" />
     <Compile Include="ProductsDat.cs" />

@@ -16,7 +16,7 @@
             <a href="WFProducts.aspx">Productos</a>
             <a href="WFCategories.aspx">Categorias</a>
             <a href="WFProviders.aspx">Proveedores</a>
-            <a href="#">Usuarios</a>
+            <a href="WFUsers.aspx">Usuarios</a>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>

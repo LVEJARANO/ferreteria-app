@@ -35,15 +35,15 @@ namespace Data
 
             MySqlCommand objSelectCmd = new MySqlCommand();
             objSelectCmd.Connection = objPer.openConnection();
-            objSelectCmd.CommandText = "spInsertUsers"; //nombre del procedimiento almacenado
+            objSelectCmd.CommandText = "spInsertUser"; //nombre del procedimiento almacenado
             objSelectCmd.CommandType = CommandType.StoredProcedure;
             objSelectCmd.Parameters.Add("p_mail", MySqlDbType.VarString).Value = _mail;
             objSelectCmd.Parameters.Add("p_password", MySqlDbType.VarString).Value = _password;
             objSelectCmd.Parameters.Add("p_salt", MySqlDbType.VarString).Value = _salt;
             objSelectCmd.Parameters.Add("p_state", MySqlDbType.VarString).Value = _state;
             objSelectCmd.Parameters.Add("p_date", MySqlDbType.Date).Value = _date;
-            objSelectCmd.Parameters.Add("p_rol", MySqlDbType.Int32).Value = _fkrol;
-            objSelectCmd.Parameters.Add("p_employee", MySqlDbType.Int32).Value = _fkemployee;
+            objSelectCmd.Parameters.Add("p_fkrol", MySqlDbType.Int32).Value = _fkrol;
+            objSelectCmd.Parameters.Add("p_fkemployee", MySqlDbType.Int32).Value = _fkemployee;
 
 
             try
@@ -70,16 +70,16 @@ namespace Data
 
             MySqlCommand objSelectCmd = new MySqlCommand();
             objSelectCmd.Connection = objPer.openConnection();
-            objSelectCmd.CommandText = "spUpdateUsers"; //nombre del procedimiento almacenado
+            objSelectCmd.CommandText = "spUpdateUser"; //nombre del procedimiento almacenado
             objSelectCmd.CommandType = CommandType.StoredProcedure;
             objSelectCmd.Parameters.Add("p_id", MySqlDbType.Int32).Value = _id;
-            objSelectCmd.Parameters.Add("p_mail", MySqlDbType.VarString).Value = _mail;
-            objSelectCmd.Parameters.Add("p_password", MySqlDbType.VarString).Value = _password;
+            objSelectCmd.Parameters.Add("p_correo", MySqlDbType.VarString).Value = _mail;
+            objSelectCmd.Parameters.Add("p_contrasena", MySqlDbType.VarString).Value = _password;
             objSelectCmd.Parameters.Add("p_salt", MySqlDbType.VarString).Value = _salt;
-            objSelectCmd.Parameters.Add("p_state", MySqlDbType.VarString).Value = _state;
-            objSelectCmd.Parameters.Add("p_date", MySqlDbType.Date).Value = _date;
-            objSelectCmd.Parameters.Add("p_rol", MySqlDbType.Int32).Value = _fkrol;
-            objSelectCmd.Parameters.Add("p_employee", MySqlDbType.Int32).Value = _fkemployee;
+            objSelectCmd.Parameters.Add("p_estado", MySqlDbType.VarString).Value = _state;
+            objSelectCmd.Parameters.Add("p_fecha_creacion", MySqlDbType.Date).Value = _date;
+            objSelectCmd.Parameters.Add("p_fkrol", MySqlDbType.Int32).Value = _fkrol;
+            objSelectCmd.Parameters.Add("p_fkempleado", MySqlDbType.Int32).Value = _fkemployee;
 
             try
             {

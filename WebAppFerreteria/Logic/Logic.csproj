@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryLog.cs" />
+    <Compile Include="EmployeesLog.cs" />
     <Compile Include="PermisoLog.cs" />
     <Compile Include="ProductsLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
