@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Web;
+using Model;
 
 namespace Logic
 {
@@ -17,6 +18,12 @@ namespace Logic
         public DataSet showUsers()
         {
             return objUse.showUsers();
+        }
+
+        //Metodo para mostrar el Usuarios pasandole el correo
+        public User showUsersMail(string mail)
+        {
+            return objUse.showUsersMail(mail);
         }
 
         //Metodo para guardar un nuevo Usuario

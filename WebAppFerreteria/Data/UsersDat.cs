@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Model;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,33 @@ namespace Data
             objAdapter.Fill(objData);
             objPer.closeConnection();
             return objData;
+        }
+
+        // Metodo que retorna un objeto con el usuario encontrado por el correo
+        public User showUsersMail(string mail)
+        {
+            User objUser = null;
+            MySqlCommand objSelectCmd = new MySqlCommand();
+            objSelectCmd.Connection = objPer.openConnection();
+            objSelectCmd.CommandText = "spSelectUserMail";
+            objSelectCmd.CommandType = CommandType.StoredProcedure;
+            objSelectCmd.Parameters.Add("p_mail", MySqlDbType.VarString).Value = mail;
+            MySqlDataReader reader = objSelectCmd.ExecuteReader();
+            if (!reader.HasRows)
+            {
+                return objUser;
+            }
+            else
+            {
+                while (reader.Read())
+                {
+                    objUser = new User(reader["usu_correo"].ToString(),
+                    reader["usu_contrasena"].ToString(), reader["usu_salt"].ToString(),
+                    reader["usu_estado"].ToString(), reader["rol_nombre"].ToString(), Convert.ToInt32(reader["per_id"]));
+                }
+            }
+            objPer.closeConnection();
+            return objUser;
         }
 
         //Metodo para guardar un nuevo Usuario
