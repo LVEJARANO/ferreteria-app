@@ -12,11 +12,14 @@
 <body>
         <div>
             <%--Aqui va lo que se repite en los otros WebForms--%>
-            <a href="WFInicio.aspx">Inicio</a>
-            <a href="WFProducts.aspx">Productos</a>
-            <a href="WFCategories.aspx">Categorias</a>
-            <a href="WFProviders.aspx">Proveedores</a>
-            <a href="WFUsers.aspx">Usuarios</a>
+            <a id="linkInicio" runat="server" href="WFInicio.aspx">Inicio</a>
+            <a id="linkProduct" runat="server" href="WFProducts.aspx">Productos</a>
+            <a id="linkCategory" runat="server" href="WFCategories.aspx">Categorias</a>
+            <a id="linkProvider" runat="server" href="WFProviders.aspx">Proveedores</a>
+            <a id="linkUser" runat="server" href="WFUsers.aspx">Usuarios</a>
+            <a id="linkPermission" runat="server" href="WFPermission.aspx">Permisos</a>
+            <a id="linkPermissionRol" runat="server" href="WFPermissionsRoles.aspx">Permisos Roles</a>
+            <a id="linkCloseSession" runat="server" href="Logout.aspx">Cerrar sesion</a>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>

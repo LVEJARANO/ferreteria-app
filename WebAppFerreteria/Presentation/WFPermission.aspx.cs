@@ -11,16 +11,13 @@ using System.Web.UI.WebControls;
 
 namespace Presentation
 {
-    public partial class WFProducts : System.Web.UI.Page
+    public partial class WFPermission : System.Web.UI.Page
     {
         //Crear los objetos
-        ProductsLog objProd = new ProductsLog();
-        ProvidersLog objPro = new ProvidersLog();
-        CategoryLog objCat = new CategoryLog();
+        PermisoLog objPer = new PermisoLog();
 
-        private int _id, _quantity, _fkCategory, _fkProvider;
-        private string _code, _description;
-        private double _price;
+        private int _id;
+        private string _name, _description;
         private bool executed = false;
 
         /*
@@ -37,65 +34,48 @@ namespace Presentation
                 // Los botones y otros elementos se inicializan en false, no visibles.
                 BtnSave.Visible = false;
                 BtnUpdate.Visible = false;
-                FrmProduct.Visible = false;
+                FrmPermission.Visible = false;
                 PanelAdmin.Visible = false;
-                //Aqui se invocan todos los metodos
-                //showProducts();
-                showProvidersDDL();
-                showCategoriesDDL();
             }
-            // Se invoca el metodo validar permisos roles.
             validatePermissionRol();
         }
-        //Metodo para mostrar todos los productos
-        /*
-      * Atributo [WebMethod] en ASP.NET, permite que el método sea expuesto como 
-      * parte de un servicio web, lo que significa que puede ser invocado de manera
-      * remota a través de HTTP.
-      */
+
         [WebMethod]
-        public static object ListProducts()
+        public static object ListPermissions()
         {
-            ProductsLog objProd = new ProductsLog();
+            PermisoLog objPer = new PermisoLog();
 
-            // Se obtiene un DataSet que contiene la lista de productos desde la base de datos.
-            var dataSet = objProd.showProducts();
+            // Se obtiene un DataSet que contiene la lista de los permisos desde la base de datos.
+            var dataSet = objPer.showPermission();
 
-            // Se crea una lista para almacenar los productos que se van a devolver.
-            var productsList = new List<object>();
+            // Se crea una lista para almacenar los permisos que se van a devolver.
+            var permissionsList = new List<object>();
 
-            // Se itera sobre cada fila del DataSet (que representa un producto).
+            // Se itera sobre cada fila del DataSet (que representa un permiso).
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                productsList.Add(new
+                permissionsList.Add(new
                 {
-                    ProductID = row["pro_id"],
-                    Code = row["pro_codigo"],
-                    Description = row["pro_descripcion"],
-                    Quantity = row["pro_cantidad"],
-                    Price = row["pro_precio"],
-                    FkCategory = row["tbl_categoria_cat_id"],
-                    NameCategory = row["cat_descripcion"],
-                    FkProvider = row["tbl_proveedor_prov_id"],
-                    NameProvider = row["prov_nombre"]
+                    PermisoID = row["per_id"],
+                    NamePermiso = row["per_nombre"],
+                    Description = row["per_descripcion"],
                 });
             }
-
-            // Devuelve un objeto en formato JSON que contiene la lista de productos.
-            return new { data = productsList };
+            // Devuelve un objeto en formato JSON que contiene la lista de permisos roles.
+            return new { data = permissionsList };
         }
 
         [WebMethod]
-        public static bool DeleteProduct(int id)
+        public static bool DeletePermission(int id)
         {
-            // Crear una instancia de la clase de lógica de productos
-            ProductsLog objProd = new ProductsLog();
+            // Crear una instancia de la clase de lógica de permiso
+            PermisoLog objPer = new PermisoLog();
 
-            // Invocar al método para eliminar el producto y devolver el resultado
-            return objProd.deleteProducts(id);
+            // Invocar al método para eliminar el permiso y devolver el resultado
+            return objPer.deletePermission(id);
         }
 
-        // Metodo validar permisos roles
+        // Metodo para validar permisos roles
         private void validatePermissionRol()
         {
             // Se Obtiene el usuario actual desde la sesión
@@ -122,14 +102,14 @@ namespace Presentation
                     switch (permiso.Nombre)
                     {
                         case "CREAR":
-                            FrmProduct.Visible = true;// Se pone visible el formulario
+                            FrmPermission.Visible = true;// Se pone visible el formulario
                             BtnSave.Visible = true;// Se pone visible el boton guardar
                             break;
                         case "ACTUALIZAR":
-                            FrmProduct.Visible = true;
-                            BtnUpdate.Visible = true;// Se pone visible el boton actualizar
-                            PanelAdmin.Visible = true;// Se pone visible el panel
-                            _showEditButton = true;// Se pone visible el boton editar dentro de la datatable
+                            FrmPermission.Visible = true;
+                            BtnUpdate.Visible = true;
+                            PanelAdmin.Visible = true;
+                            _showEditButton = true;
                             break;
                         case "MOSTRAR":
                             //LblMsg.Text += " Tienes permiso de Mostrar!";
@@ -138,7 +118,7 @@ namespace Presentation
                         case "ELIMINAR":
                             //LblMsg.Text += " Tienes permiso de Eliminar!";
                             PanelAdmin.Visible = true;
-                            _showDeleteButton = true;// Se pone visible el boton eliminar dentro de la datatable
+                            _showDeleteButton = true;
                             break;
                         default:
                             // Si el permiso no coincide con ninguno de los casos anteriores
@@ -152,7 +132,7 @@ namespace Presentation
                 //LblMsg.Text = "Bienvenido, Gerente!";
 
                 masterPage.linkUser.Visible = false;// Se oculta el enlace de Usuario
-                masterPage.linkPermission.Visible = false; // Se oculta el enlace Permiso 
+                masterPage.linkPermission.Visible = false;
                 masterPage.linkPermissionRol.Visible = false;// Se oculta el enlace de Permiso Rol
 
                 foreach (var permiso in objUser.Permisos)
@@ -160,12 +140,12 @@ namespace Presentation
                     switch (permiso.Nombre)
                     {
                         case "CREAR":
-                            FrmProduct.Visible = true;
+                            FrmPermission.Visible = true;
                             BtnSave.Visible = true;
                             PanelAdmin.Visible = true;
                             break;
                         case "ACTUALIZAR":
-                            FrmProduct.Visible = true;
+                            FrmPermission.Visible = true;
                             BtnUpdate.Visible = true;
                             PanelAdmin.Visible = true;
                             _showEditButton = true;
@@ -191,7 +171,7 @@ namespace Presentation
             {
                 //LblMsg.Text = "Bienvenido, Secretaria!";
                 masterPage.linkUser.Visible = false;
-                masterPage.linkPermission.Visible = false; 
+                masterPage.linkPermission.Visible = false;
                 masterPage.linkPermissionRol.Visible = false;
 
                 foreach (var permiso in objUser.Permisos)
@@ -199,12 +179,12 @@ namespace Presentation
                     switch (permiso.Nombre)
                     {
                         case "CREAR":
-                            FrmProduct.Visible = true;
+                            FrmPermission.Visible = true;
                             BtnSave.Visible = true;
                             PanelAdmin.Visible = true;
                             break;
                         case "ACTUALIZAR":
-                            FrmProduct.Visible = true;
+                            FrmPermission.Visible = true;
                             BtnUpdate.Visible = true;
                             PanelAdmin.Visible = true;
                             _showEditButton = true;
@@ -231,88 +211,33 @@ namespace Presentation
             }
         }
 
-        //Metodo para mostrar los proveedores en el DDL
-        private void showProvidersDDL()
-        {
-            DDLProviders.DataSource = objPro.showProvidersDDL();
-            DDLProviders.DataValueField = "prov_id";//Nombre de la llave primaria
-            DDLProviders.DataTextField = "prov_nombre";
-            DDLProviders.DataBind();
-            DDLProviders.Items.Insert(0, new ListItem("Seleccione", ""));
-        }
-        //Metodo para mostrar las categorias en el DDL
-        private void showCategoriesDDL()
-        {
-            DDLCategory.DataSource = objCat.showCategoriesDDL();
-            DDLCategory.DataValueField = "cat_id";//Nombre de la llave primaria
-            DDLCategory.DataTextField = "cat_descripcion";
-            DDLCategory.DataBind();
-            DDLCategory.Items.Insert(0, new ListItem("Seleccione", ""));// Se inserta un nuevo item en la lista
-        }
         //Metodo para limpiar los TextBox y los DDL
         private void clear()
         {
-            HFProductID.Value = "";
-            TBCode.Text = "";
-            TBDescription.Text = "";
-            TBQuantity.Text = "";
-            TBPrice.Text = "";
-            DDLCategory.SelectedIndex = 0;
-            DDLProviders.SelectedIndex = 0;
+            HFPermisoID.Value = "";
+            DDLNombrePer.SelectedIndex = 0;
+            TBDescripcion.Text = "";
         }
-        //Eventos que se ejecutan cuando se da clic en los botones
+
         protected void BtnSave_Click(object sender, EventArgs e)
         {
             // Verificar que todos validadores de la pagina esten ok
             if (Page.IsValid)
             {
-                _code = TBCode.Text;
-                _description = TBDescription.Text;
-                _quantity = Convert.ToInt32(TBQuantity.Text);
-                _price = Convert.ToDouble(TBPrice.Text);
-                _fkProvider = Convert.ToInt32(DDLProviders.SelectedValue);
-                _fkCategory = Convert.ToInt32(DDLCategory.SelectedValue);
+                _name = DDLNombrePer.SelectedValue.ToUpper();
+                _description = TBDescripcion.Text;
 
-                executed = objProd.saveProducts(_code, _description, _quantity, _price, _fkProvider, _fkCategory);
+                executed = objPer.savePermission(_name, _description);
 
                 if (executed)
                 {
-                    LblMsg.Text = "El producto se guardo exitosamente!";
-
+                    LblMsg.Text = "El permiso se guardo exitosamente!";
+                    clear();//Se invoca el metodo para limpiar los campos 
                 }
                 else
                 {
                     LblMsg.Text = "Error al guardar";
                 }
-            }
-        }
-        // Evento del boton actualizar
-        protected void BtnUpdate_Click(object sender, EventArgs e)
-        {
-            // Verifica si se ha seleccionado un producto para actualizar
-            if (string.IsNullOrEmpty(HFProductID.Value))
-            {
-                LblMsg.Text = "No se ha seleccionado un producto para actualizar.";
-                return;
-            }
-            _id = Convert.ToInt32(HFProductID.Value);
-            _code = TBCode.Text;
-            _description = TBDescription.Text;
-            _quantity = Convert.ToInt32(TBQuantity.Text);
-            _price = Convert.ToDouble(TBPrice.Text);
-            _fkProvider = Convert.ToInt32(DDLProviders.SelectedValue);
-            _fkCategory = Convert.ToInt32(DDLCategory.SelectedValue);
-
-            executed = objProd.updateProducts(_id, _code, _description, _quantity, _price, _fkProvider, _fkCategory);
-
-            if (executed)
-            {
-                LblMsg.Text = "El producto se actualizo exitosamente!";
-                clear(); //Se invoca el metodo para limpiar los campos 
-            }
-            else
-            {
-                LblMsg.Text = "Error al actualizar";
             }
         }
     }

@@ -5,13 +5,21 @@
     <link href="resources/css/datatables.min.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form runat="server">
+    <form id="FrmProduct" runat="server">
         <%--Id--%>
         <asp:HiddenField ID="HFProductID" runat="server" />
 
         <%--Codigo--%>
         <asp:Label ID="Label1" runat="server" Text="Ingrese el Codigo"></asp:Label>
         <asp:TextBox ID="TBCode" runat="server"></asp:TextBox>
+        <%--Valida que el TextBox este lleno--%>
+        <asp:RequiredFieldValidator ID="RFVCode"
+            runat="server"
+            ControlToValidate="TBCode"
+            ForeColor="Red"
+            Display="Dynamic"
+            ErrorMessage="Este campo es obligatorio">
+        </asp:RequiredFieldValidator>
         <br />
         <%--Descripcion--%>
         <asp:Label ID="Label2" runat="server" Text="Ingrese la Descripcion"></asp:Label>
@@ -32,6 +40,13 @@
         <%--Categorias--%>
         <asp:Label ID="Label6" runat="server" Text="Seleccione la Categoria"></asp:Label>
         <asp:DropDownList ID="DDLCategory" runat="server"></asp:DropDownList>
+        <%--Valida que el DropDownList este seleccionado con algun valor--%>
+        <asp:RequiredFieldValidator ID="RFVCategory" runat="server"
+            ControlToValidate="DDLCategory"
+            InitialValue=""
+            ErrorMessage="Debes seleccionar una Categoria."
+            ForeColor="Red">
+        </asp:RequiredFieldValidator>
         <br />
         <%--Botones Guardar y Actualizar--%>
         <div>
@@ -42,32 +57,36 @@
         <br />
     </form>
 
-
-    <%--Lista de Productos--%>
-    <h2>Lista de Proveedores</h2>
-    <table id="productsTable" class="display" style="width: 100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Codigo</th>
-                <th>Descripcion</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>FkCategoria</th>
-                <th>Categoria</th>
-                <th>FkProveedor</th>
-                <th>Proveedor</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <%--Panel para la gestion del Administrador--%>
+    <asp:Panel ID="PanelAdmin" runat="server">
+        <%--Lista de Productos--%>
+        <h2>Lista de Proveedores</h2>
+        <table id="productsTable" class="display" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Codigo</th>
+                    <th>Descripcion</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>FkCategoria</th>
+                    <th>Categoria</th>
+                    <th>FkProveedor</th>
+                    <th>Proveedor</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </asp:Panel>
 
     <script src="resources/js/datatables.min.js" type="text/javascript"></script>
 
     <%--Productos--%>
     <script type="text/javascript">
         $(document).ready(function () {
+            const showEditButton = '<%= _showEditButton %>' === 'True';
+            const showDeleteButton = '<%= _showDeleteButton %>' === 'True';
             $('#productsTable').DataTable({
                 "processing": true,
                 "serverSide": false,
@@ -94,9 +113,15 @@
                     { "data": "NameProvider" },
                     {
                         "data": null,
-                        "render": function (data, type, row) {
-                            return `<button class="edit-btn" data-id="${row.ProductID}">Editar</button>
-                               <button class="delete-btn" data-id="${row.ProductID}">Eliminar</button>`;
+                        "render": function (row) {
+                            let buttons = '';
+                            if (showEditButton) {
+                                buttons += `<button class="edit-btn" data-id="${row.ProductID}">Editar</button>`;
+                            }
+                            if (showDeleteButton) {
+                                buttons += `<button class="delete-btn" data-id="${row.ProductID}">Eliminar</button>`;
+                            }
+                            return buttons;
                         }
                     }
                 ],
@@ -137,12 +162,12 @@
         // Cargar los datos en los TextBox y DDL para actualizar
         function loadProductData(rowData) {
             $('#<%= HFProductID.ClientID %>').val(rowData.ProductID);
-          $('#<%= TBCode.ClientID %>').val(rowData.Code);
-          $('#<%= TBDescription.ClientID %>').val(rowData.Description);
-          $('#<%= TBQuantity.ClientID %>').val(rowData.Quantity);
-          $('#<%= TBPrice.ClientID %>').val(rowData.Price);
-          $('#<%= DDLProviders.ClientID %>').val(rowData.FkProvider);
-          $('#<%= DDLCategory.ClientID %>').val(rowData.FkCategory);
+            $('#<%= TBCode.ClientID %>').val(rowData.Code);
+            $('#<%= TBDescription.ClientID %>').val(rowData.Description);
+            $('#<%= TBQuantity.ClientID %>').val(rowData.Quantity);
+            $('#<%= TBPrice.ClientID %>').val(rowData.Price);
+            $('#<%= DDLProviders.ClientID %>').val(rowData.FkProvider);
+            $('#<%= DDLCategory.ClientID %>').val(rowData.FkCategory);
         }
 
         // Función para eliminar un producto
@@ -161,5 +186,5 @@
                 }
             });
         }
-  </script>
+    </script>
 </asp:Content>
