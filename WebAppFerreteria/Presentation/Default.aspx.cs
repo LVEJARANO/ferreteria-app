@@ -27,8 +27,12 @@ namespace Presentation
             // Muestra la imagen de cargando antes de procesar la encriptación
             ScriptManager.RegisterStartupScript(this, GetType(), "showLoading", "showLoading();", true);
 
+            /*
+             * Instancia un servicio de criptografía utilizando el algoritmo PBKDF2 (Password-Based Key Derivation Function 2),
+             * que es comúnmente utilizado para cifrar contraseñas de forma segura.
+             */
             ICryptoService cryptoService = new PBKDF2();
-            _correo = TBCorreo.Text;
+            _correo = TBCorreo.Text;// Asigna el valor ingresado en el TextBox del correo electrónico 
             _contrasena = TBContrasena.Text;
 
             objUser = objUserLog.showUsersMail(_correo);// Busca el correo del usuario

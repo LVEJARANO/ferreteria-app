@@ -5,80 +5,104 @@
     <link href="resources/css/datatables.min.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form id="FrmProduct" runat="server">
-        <%--Id--%>
-        <asp:HiddenField ID="HFProductID" runat="server" />
-
-        <%--Codigo--%>
-        <asp:Label ID="Label1" runat="server" Text="Ingrese el Codigo"></asp:Label>
-        <asp:TextBox ID="TBCode" runat="server"></asp:TextBox>
-        <%--Valida que el TextBox este lleno--%>
-        <asp:RequiredFieldValidator ID="RFVCode"
-            runat="server"
-            ControlToValidate="TBCode"
-            ForeColor="Red"
-            Display="Dynamic"
-            ErrorMessage="Este campo es obligatorio">
-        </asp:RequiredFieldValidator>
-        <br />
-        <%--Descripcion--%>
-        <asp:Label ID="Label2" runat="server" Text="Ingrese la Descripcion"></asp:Label>
-        <asp:TextBox ID="TBDescription" runat="server"></asp:TextBox>
-        <br />
-        <%--Cantidad--%>
-        <asp:Label ID="Label3" runat="server" Text="Ingrese la Cantidad"></asp:Label>
-        <asp:TextBox ID="TBQuantity" runat="server"></asp:TextBox>
-        <br />
-        <%--Precio--%>
-        <asp:Label ID="Label4" runat="server" Text="Ingrese el Precio"></asp:Label>
-        <asp:TextBox ID="TBPrice" runat="server"></asp:TextBox>
-        <br />
-        <%--Proveedor--%>
-        <asp:Label ID="Label5" runat="server" Text="Seleccione el Proveedor"></asp:Label>
-        <asp:DropDownList ID="DDLProviders" runat="server"></asp:DropDownList>
-        <br />
-        <%--Categorias--%>
-        <asp:Label ID="Label6" runat="server" Text="Seleccione la Categoria"></asp:Label>
-        <asp:DropDownList ID="DDLCategory" runat="server"></asp:DropDownList>
-        <%--Valida que el DropDownList este seleccionado con algun valor--%>
-        <asp:RequiredFieldValidator ID="RFVCategory" runat="server"
-            ControlToValidate="DDLCategory"
-            InitialValue=""
-            ErrorMessage="Debes seleccionar una Categoria."
-            ForeColor="Red">
-        </asp:RequiredFieldValidator>
-        <br />
-        <%--Botones Guardar y Actualizar--%>
-        <div>
-            <asp:Button ID="BtnSave" runat="server" Text="Guardar" OnClick="BtnSave_Click" />
-            <asp:Button ID="BtnUpdate" runat="server" Text="Actualizar" OnClick="BtnUpdate_Click" />
-            <asp:Label ID="LblMsg" runat="server" Text=""></asp:Label>
+    <div class="card m-1">
+        <div class="card-header">
+            Gestión de Productos
         </div>
-        <br />
-    </form>
+        <div class="card-body">
+            <form id="FrmProduct" runat="server">
+                <%--Id--%>
+                <asp:HiddenField ID="HFProductID" runat="server" />
+                <div class="row m-1">
+                    <div class="col-2">
+                        <%--Codigo--%>
+                        <asp:Label ID="Label1" CssClass="form-label" runat="server" Text="Ingrese el Codigo"></asp:Label>
+                        <asp:TextBox ID="TBCode" CssClass="form-control" runat="server"></asp:TextBox>
+                        <%--Valida que el TextBox este lleno--%>
+                        <asp:RequiredFieldValidator ID="RFVCode"
+                            runat="server"
+                            ControlToValidate="TBCode"
+                            ForeColor="Red"
+                            Display="Dynamic"
+                            ErrorMessage="Este campo es obligatorio.">
+                        </asp:RequiredFieldValidator>
+                    </div>
+                    <div class="col-8">
+                        <%--Descripcion--%>
+                        <asp:Label ID="Label2" CssClass="form-label" runat="server" Text="Ingrese la Descripcion"></asp:Label>
+                        <asp:TextBox ID="TBDescription" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-2">
+                        <%--Cantidad--%>
+                        <asp:Label ID="Label3" CssClass="form-label" runat="server" Text="Ingrese la Cantidad"></asp:Label>
+                        <asp:TextBox ID="TBQuantity" CssClass="form-control" TextMode="Number" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="row m-1">
+                    <div class="col-2">
+                        <%--Precio--%>
+                        <asp:Label ID="Label4" CssClass="form-label" runat="server" Text="Ingrese el Precio"></asp:Label>
+                        <asp:TextBox ID="TBPrice" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-5">
+                        <%--Proveedor--%>
+                        <asp:Label ID="Label5" CssClass="form-label" runat="server" Text="Proveedor"></asp:Label>
+                        <asp:DropDownList ID="DDLProviders" CssClass="form-select" runat="server"></asp:DropDownList>
+                    </div>
+                    <div class="col-5">
+                        <%--Categorias--%>
+                        <asp:Label ID="Label6" CssClass="form-label" runat="server" Text="Categoria"></asp:Label>
+                        <asp:DropDownList ID="DDLCategory" CssClass="form-select" runat="server"></asp:DropDownList>
+                        <%--Valida que el DropDownList este seleccionado con algun valor--%>
+                        <asp:RequiredFieldValidator ID="RFVCategory" runat="server"
+                            ControlToValidate="DDLCategory"
+                            InitialValue=""
+                            ErrorMessage="Debes seleccionar una Categoria."
+                            ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+                        <br />
+                    </div>
+                </div>
+                <div class="row m-1">
+                    <div class="col">
+                        <%--Botones Guardar y Actualizar--%>
+                        <asp:Button ID="BtnSave" CssClass="btn btn-success" runat="server" Text="Guardar" OnClick="BtnSave_Click" />
+                        <asp:Button ID="BtnUpdate" runat="server" CssClass="btn btn-primary" Text="Actualizar" OnClick="BtnUpdate_Click" />
+                        <asp:Label ID="LblMsg" CssClass="form-label" runat="server" Text=""></asp:Label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <%--Panel para la gestion del Administrador--%>
-    <asp:Panel ID="PanelAdmin" runat="server">
-        <%--Lista de Productos--%>
-        <h2>Lista de Proveedores</h2>
-        <table id="productsTable" class="display" style="width: 100%">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Codigo</th>
-                    <th>Descripcion</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>FkCategoria</th>
-                    <th>Categoria</th>
-                    <th>FkProveedor</th>
-                    <th>Proveedor</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </asp:Panel>
+    <div class="card m-1">
+        <%--Panel para la gestion del Administrador--%>
+        <asp:Panel ID="PanelAdmin" runat="server">
+            <div class="card-header">
+                Lista de Proveedores
+            </div>
+            <div class="card-body">
+                <%--Lista de Productos--%>
+                <table id="productsTable" class="table table-hover display" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Codigo</th>
+                            <th>Descripcion</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>FkCategoria</th>
+                            <th>Categoria</th>
+                            <th>FkProveedor</th>
+                            <th>Proveedor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </asp:Panel>
+    </div>
 
     <script src="resources/js/datatables.min.js" type="text/javascript"></script>
 
@@ -116,10 +140,10 @@
                         "render": function (row) {
                             let buttons = '';
                             if (showEditButton) {
-                                buttons += `<button class="edit-btn" data-id="${row.ProductID}">Editar</button>`;
+                                buttons += `<button class="btn btn-info edit-btn" data-id="${row.ProductID}">Editar</button>`;
                             }
                             if (showDeleteButton) {
-                                buttons += `<button class="delete-btn" data-id="${row.ProductID}">Eliminar</button>`;
+                                buttons += `<button class="btn btn-danger delete-btn" data-id="${row.ProductID}">Eliminar</button>`;
                             }
                             return buttons;
                         }
