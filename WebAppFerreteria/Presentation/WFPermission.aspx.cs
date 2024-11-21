@@ -16,7 +16,7 @@ namespace Presentation
         //Crear los objetos
         PermisoLog objPer = new PermisoLog();
 
-        private int _id;
+        //private int _id;
         private string _name, _description;
         private bool executed = false;
 

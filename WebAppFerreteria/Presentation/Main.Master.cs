@@ -14,7 +14,6 @@ namespace Presentation
          * HtmlAnchor, es una clase que proporciona una forma de manipular enlaces HTML
          * directamente desde el código en el servidor.
          */
-        public HtmlAnchor linkInicio;
         public HtmlAnchor linkUser;
         public HtmlAnchor linkPermissionRol;
         public HtmlAnchor linkPermission;

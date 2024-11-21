@@ -152,5 +152,21 @@ namespace Data
             objPer.closeConnection();
             return executed;
         }
+
+        // Método para mostrar cuantos productos existen por categoria.
+        public DataSet showCountProductsCategories()
+        {
+            MySqlDataAdapter objAdapter = new MySqlDataAdapter();
+            DataSet objData = new DataSet();
+            
+            MySqlCommand objSelectCmd = new MySqlCommand();
+            objSelectCmd.Connection = objPer.openConnection();
+            objSelectCmd.CommandText = "spSelectCountProductsCategories";
+            objSelectCmd.CommandType = CommandType.StoredProcedure;
+            objAdapter.SelectCommand = objSelectCmd;
+            objAdapter.Fill(objData);
+            objPer.closeConnection();
+            return objData;
+        }
     }
 }
